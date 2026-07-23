@@ -19,28 +19,25 @@ st.markdown("# 画像認識")
 
 file = st.file_uploader("画像ファイルをアップロードしてください")
 
-
+content = None
 if file is not None:
-   
    content = file.getvalue()
    st.image(content)
 
 if st.button("解析をする"):
-   response = get_response(content)
-   labels = response.label_annotations
-   
-   # 1. 最初にタイトルを表示（順番を修正）
-   st.write("Labels:")
-   
-   if response.error.message:
-       raise Exception(
-           f"{response.error.message}\nFor more info on error messages, check: "
-           "https://cloud.google.com/apis/design/errors"
-       )
+   if content is None:
+       st.warning("画像ファイルをアップロードしてください。")
+   else:
+       response = get_response(content)
 
-   # 2. columnsループを廃止し、カンマ（またはスペース）区切りで1行にまとめる
-   label_names = [f"• {label.description}" for label in labels]
-   horizontal_labels = "  ".join(label_names)  # スペース2つで横に並べる
-   
-   # 3. まとめた文字列を一度に出力
-   st.write(horizontal_labels)
+       if response.error.message:
+           raise Exception(
+               f"{response.error.message}\nFor more info on error messages, check: "
+               "https://cloud.google.com/apis/design/errors"
+           )
+
+       labels = response.label_annotations
+       st.write("Labels:")
+       label_names = [f"• {label.description}" for label in labels]
+       horizontal_labels = "  ".join(label_names)
+       st.write(horizontal_labels)

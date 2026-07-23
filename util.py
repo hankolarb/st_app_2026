@@ -24,8 +24,7 @@ def get_response(encoded_audio: str, *, sa_info: dict = None, api_key: str = Non
     payload = {
         "config": {
             "languageCode": "ja-JP",
-            "languageCode": "es-ES",
-            "languageCode": "my-MM",
+            "alternativeLanguageCodes": ["es-ES", "my-MM"],
             "enableWordTimeOffsets": True,
             "audioChannelCount": 1
         },

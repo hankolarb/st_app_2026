@@ -107,8 +107,8 @@ if st.button("入力完了"):
     st.text(f"{full_name}({user_id_text})さんの予測結果")
     st.table(
         {
-            "年齢": age,
-            "性別": gender,
-            "国籍": country
+            "年齢": [age],
+            "性別": [gender],
+            "国籍": [country]
         }
     )
